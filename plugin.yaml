@@ -1,0 +1,78 @@
+kind: plugin
+schema-version: v1
+spec:
+  about: docs/about.md
+  requirements: docs/requirements.md
+  implementation: docs/implementation.md
+  type: app
+  release-notes: docs/release-notes-0.0.1.md
+  usage: docs/usage.md
+  technologies: # Ref: https://docs.stackspot.com/docs/create-stacks/yaml-files/yaml/#technologies
+  - "Kotlin"
+  - "PostgreSQL"
+  compatibility:
+  - kotlin
+  
+  # inputs:
+  # - label: Tipo de banco de dados
+  #   type: text
+  #   name: database
+  #   items:
+  #   - postgresql
+  #   help: Informe o tipo de banco de dados
+  # - label: Ambiente
+  #   type: text
+  #   name: environment
+  #   items:
+  #   - sit
+  #   help: Informe o ambiente do banco de dados
+  # - label: Servidor (host)
+  #   type: text
+  #   name: database_host
+  #   default: localhost
+  #   pattern: "[A-z0-9-_\\.]+"
+  #   help: Informe o servidor do banco de dados
+  # - label: Porta (porta)
+  #   type: text
+  #   name: database_port
+  #   default: 5432
+  #   pattern: "\\d+"
+  #   help: Informe a porta do banco de dados
+  # - label: Nome da base dados
+  #   type: text
+  #   name: database_name
+  #   default: database
+  #   pattern: "[A-z0-9-_\\.]+"
+  #   help: Informe o nome da base de dados
+  # - label: Usuário do banco dados
+  #   type: text
+  #   name: database_user
+  #   default: user
+  #   pattern: "[A-z0-9-_\\.]+"
+  #   help: Informe o usuário do banco de dados
+  # - label: Senha do banco dados
+  #   type: text
+  #   name: database_password
+  #   default: password
+  #   help: Informe a senha do banco de dados
+
+  # computed_inputs:
+  #   database_properties_prefix: "db.{{database_name|replace('_','.')}}"
+  #   database_name_camelcase: "{{database_name|camelcase}}"
+  
+  hooks:
+  - type: edit
+    trigger: after-render
+    path: "ConnectionSQL.kt"
+    changes:
+    - search:
+      string: "companion object {"
+      insert-after: "teste\n"
+      when:
+        not-exists: "teste"
+metadata:
+  picture: plugin.png
+  display-name: test-search
+  version: 1.0.0
+  name: test-search
+  description: Adiciona classe para conexão com bancos de dados
