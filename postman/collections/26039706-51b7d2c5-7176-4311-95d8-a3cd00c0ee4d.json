@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "26039706-51b7d2c5-7176-4311-95d8-a3cd00c0ee4d",
-		"name": "Camunda Teste 2",
+		"name": "Camunda",
 		"description": "﻿Permite manipular o Camunda, podendo consultar instâncias de processo, pular atividades, alterar variáveis e executar um trabalho novamente.\n\n﻿p2k_ignore",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
