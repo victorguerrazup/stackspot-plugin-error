@@ -1,0 +1,2821 @@
+{
+	"info": {
+		"_postman_id": "26039706-51b7d2c5-7176-4311-95d8-a3cd00c0ee4d",
+		"name": "Camunda",
+		"description": "﻿Permite manipular o Camunda, podendo consultar instâncias de processo, pular atividades, alterar variáveis e executar um trabalho novamente.\n\n﻿p2k_ignore",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Join",
+			"item": [
+				{
+					"name": "Find Processes Instances by Customer Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "563ecfe9-8f53-4860-b997-ca5ba299684a",
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"  const instances = pm.response.json()",
+									"  const urlCamunda = pm.environment.get('url_camunda_join')",
+									"  for (i = 0; i < instances.length; i++) {",
+									"    console.log(instances[i].definitionId)",
+									"    console.log(urlCamunda + '/clarocustom/camunda/app/cockpit/default/#/process-instance/' + instances[i].id)",
+									"  }",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "26039706-6a461dee-2c2b-4d3d-aa6b-dc2140b1e669",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-application-id",
+								"value": "flex"
+							},
+							{
+								"key": "x-organization-slug",
+								"value": "claro"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"variables\": [\n    {\n      \"name\": \"CUSTOMER_ID\",\n      \"operator\": \"eq\",\n      \"value\": \"{{customer_id}}\"\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_camunda_join}}/clarocustom/engine-rest/process-instance?maxResults=10",
+							"host": [
+								"{{url_camunda_join}}"
+							],
+							"path": [
+								"clarocustom",
+								"engine-rest",
+								"process-instance"
+							],
+							"query": [
+								{
+									"key": "maxResults",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "26039706-28f45dcd-5c65-43de-a6aa-28384b788994",
+							"name": "200 - Sucesso",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-application-id",
+										"value": "flex"
+									},
+									{
+										"key": "x-organization-slug",
+										"value": "claro"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"variables\": [\n    {\n      \"name\": \"CUSTOMER_ID\",\n      \"operator\": \"eq\",\n      \"value\": \"{{customer_id}}\"\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url_camunda_som}}/clarocustom/engine-rest/process-instance?maxResults=10",
+									"host": [
+										"{{url_camunda_som}}"
+									],
+									"path": [
+										"clarocustom",
+										"engine-rest",
+										"process-instance"
+									],
+									"query": [
+										{
+											"key": "maxResults",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 26 Sep 2024 20:20:49 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "471"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-envoy-upstream-service-time",
+									"value": "359"
+								},
+								{
+									"key": "server",
+									"value": "istio-envoy"
+								},
+								{
+									"key": "x-envoy-decorator-operation",
+									"value": "claro-realwave-extensions-custom-join-web.sit.svc.cluster.local:8080/*"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "[\n    {\n        \"links\": [],\n        \"id\": \"4eb0e218-7c44-11ef-a13f-9aa31cf95e18\",\n        \"definitionId\": \"product_manager:167:036c3610-7c3c-11ef-9d71-caf0a4463923\",\n        \"businessKey\": \"MIGRATION_SO_1017766\",\n        \"caseInstanceId\": null,\n        \"ended\": false,\n        \"suspended\": false,\n        \"tenantId\": null\n    },\n    {\n        \"links\": [],\n        \"id\": \"500e2859-7c44-11ef-b061-fe40c77b6d67\",\n        \"definitionId\": \"migration:170:03cc7ee0-7c3c-11ef-9d71-caf0a4463923\",\n        \"businessKey\": \"MIGRATION_SO_1017766\",\n        \"caseInstanceId\": null,\n        \"ended\": false,\n        \"suspended\": false,\n        \"tenantId\": null\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Skip Activity",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3aacd428-1143-4fcb-81d5-0ea25ccfac81",
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "26039706-eb366390-1d15-4b95-a914-6143c52365f9",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-application-id",
+								"value": "flex"
+							},
+							{
+								"key": "x-organization-slug",
+								"value": "claro"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"skipCustomListeners\": true,\n  \"skipIoMappings\": true,\n  \"instructions\": [\n    {\n      \"type\": \"startBeforeActivity\",\n      \"activityId\": \"COM_CHANGE_VALUE_CALLBACK\"\n    },\n    {\n      \"type\": \"cancel\",\n      \"activityId\": \"OCS_CREATE_CUSTOMER\"\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_camunda_join}}/clarocustom/engine-rest/process-instance/:processId/modification",
+							"host": [
+								"{{url_camunda_join}}"
+							],
+							"path": [
+								"clarocustom",
+								"engine-rest",
+								"process-instance",
+								":processId",
+								"modification"
+							],
+							"variable": [
+								{
+									"key": "processId",
+									"value": "9b7a3964-7c49-11ef-a36c-fe9252fa06bf"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "26039706-dd926ba3-3174-4365-bf3d-8ae04ba7b551",
+							"name": "204 - Sucesso",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-application-id",
+										"value": "flex"
+									},
+									{
+										"key": "x-organization-slug",
+										"value": "claro"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"skipCustomListeners\": true,\n  \"skipIoMappings\": true,\n  \"instructions\": [\n    {\n      \"type\": \"startBeforeActivity\",\n      \"activityId\": \"COM_CHANGE_VALUE_CALLBACK\"\n    },\n    {\n      \"type\": \"cancel\",\n      \"activityId\": \"OCS_CREATE_CUSTOMER\"\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url_camunda_som}}/clarocustom/engine-rest/process-instance/:processId/modification",
+									"host": [
+										"{{url_camunda_som}}"
+									],
+									"path": [
+										"clarocustom",
+										"engine-rest",
+										"process-instance",
+										":processId",
+										"modification"
+									],
+									"variable": [
+										{
+											"key": "processId",
+											"value": null
+										}
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 26 Sep 2024 20:20:49 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-envoy-upstream-service-time",
+									"value": "359"
+								},
+								{
+									"key": "server",
+									"value": "istio-envoy"
+								},
+								{
+									"key": "x-envoy-decorator-operation",
+									"value": "claro-realwave-extensions-custom-join-web.sit.svc.cluster.local:8080/*"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Get Variables",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "30fb4ba7-0788-480f-b8ad-1f8fb678e510",
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"id": "26039706-927bc9cf-77fb-4b82-96fd-3cf92430ca1e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-application-id",
+								"value": "flex"
+							},
+							{
+								"key": "x-organization-slug",
+								"value": "claro"
+							}
+						],
+						"url": {
+							"raw": "{{url_camunda_join}}/clarocustom/engine-rest/process-instance/:processId/variables",
+							"host": [
+								"{{url_camunda_join}}"
+							],
+							"path": [
+								"clarocustom",
+								"engine-rest",
+								"process-instance",
+								":processId",
+								"variables"
+							],
+							"variable": [
+								{
+									"key": "processId",
+									"value": "a66e098e-97d6-11f0-ae4f-262f0b547cf0"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "26039706-0a250949-f10a-427b-b8db-6072856dd875",
+							"name": "200 - Sucesso",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-application-id",
+										"value": "flex"
+									},
+									{
+										"key": "x-organization-slug",
+										"value": "claro"
+									}
+								],
+								"url": {
+									"raw": "{{url_camunda_som}}/clarocustom/engine-rest/process-instance/:processId/variables",
+									"host": [
+										"{{url_camunda_som}}"
+									],
+									"path": [
+										"clarocustom",
+										"engine-rest",
+										"process-instance",
+										":processId",
+										"variables"
+									],
+									"variable": [
+										{
+											"key": "processId",
+											"value": "d2f0d383-7f3f-11ef-b159-1a6ac08358e6"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 30 Sep 2024 15:24:27 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "3966"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "cache-control",
+									"value": "no-cache"
+								},
+								{
+									"key": "x-envoy-upstream-service-time",
+									"value": "77"
+								},
+								{
+									"key": "server",
+									"value": "istio-envoy"
+								},
+								{
+									"key": "x-envoy-decorator-operation",
+									"value": "claro-extensions-custom-web.sit.svc.cluster.local:8080/*"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"DOCUMENT_NUMBER\": {\n        \"type\": \"String\",\n        \"value\": \"15992105840\",\n        \"valueInfo\": {}\n    },\n    \"WPP_MANUALLY_PROCESSED\": {\n        \"type\": \"Boolean\",\n        \"value\": false,\n        \"valueInfo\": {}\n    },\n    \"MSISDN\": {\n        \"type\": \"String\",\n        \"value\": \"5511913157776\",\n        \"valueInfo\": {}\n    },\n    \"DDD\": {\n        \"type\": \"String\",\n        \"value\": \"11\",\n        \"valueInfo\": {}\n    },\n    \"APPLICATION_ID\": {\n        \"type\": \"String\",\n        \"value\": \"ac76a7739985cdacad94eecd7f04ff64a97e0e93\",\n        \"valueInfo\": {}\n    },\n    \"PRE_ACTIVATION\": {\n        \"type\": \"String\",\n        \"value\": \"TRUE\",\n        \"valueInfo\": {}\n    },\n    \"ESB_CUSTOMER\": {\n        \"type\": \"String\",\n        \"value\": \"{\\\"physicalPeople\\\":[{\\\"personType\\\":\\\"PF\\\",\\\"addresses\\\":null,\\\"registerAudit\\\":null,\\\"originSystemRegister\\\":null,\\\"marketingData\\\":null,\\\"accounts\\\":null,\\\"contracts\\\":null,\\\"registerDataPhysicalPerson\\\":{\\\"treatment\\\":null,\\\"name\\\":\\\"Marli Isabel Sara Pinto\\\",\\\"birthDate\\\":null,\\\"motherName\\\":null,\\\"gender\\\":null,\\\"nationality\\\":null,\\\"documentNumber\\\":\\\"15992105840\\\",\\\"generalRegistration\\\":null,\\\"foreignGeneralRegistration\\\":null,\\\"passportNumber\\\":null,\\\"passportCountryId\\\":null,\\\"contacts\\\":[{\\\"name\\\":\\\"PRINCIPAL\\\",\\\"phoneNumber\\\":null,\\\"branchLine\\\":null,\\\"email\\\":\\\"15992105840@gmail.com\\\"}]},\\\"socialEconomicDataPhysicalPerson\\\":{\\\"occupation\\\":null,\\\"degreeEducation\\\":null,\\\"employer\\\":null,\\\"office\\\":null,\\\"admissionDate\\\":null,\\\"salaryRange\\\":null,\\\"maritalStatus\\\":null,\\\"physicalPersonType\\\":null,\\\"contributorIndicator\\\":null,\\\"numberOfDependents\\\":null,\\\"houseOwnIndicator\\\":null,\\\"contributorIndicatorFomeZero\\\":null,\\\"contributorIndicatorFundoPobreza\\\":null,\\\"conditionFiscalSpecialMemberEmbassy\\\":null},\\\"registerSituation\\\":null,\\\"homeAddress\\\":{\\\"functionAddress\\\":\\\"11\\\",\\\"prefix\\\":\\\"RUA\\\",\\\"streetName\\\":\\\"Rua Particular\\\",\\\"number\\\":\\\"412\\\",\\\"complement\\\":\\\"n/d\\\",\\\"neighborhood\\\":\\\"Jardim Monte Verde\\\",\\\"city\\\":\\\"São Paulo\\\",\\\"state\\\":\\\"SP\\\",\\\"zipCode\\\":\\\"04851510\\\",\\\"ibgeCityId\\\":\\\"3550308\\\",\\\"ibgeUfId\\\":\\\"35\\\",\\\"dddNumber\\\":\\\"11\\\",\\\"country\\\":{\\\"name\\\":\\\"Brasil\\\"}}}],\\\"legalPeople\\\":null,\\\"contracts\\\":null}\",\n        \"valueInfo\": {}\n    },\n    \"CUSTOMER_ESB_TO_RW_INFO\": {\n        \"type\": \"String\",\n        \"value\": \"{\\\"basicInfo\\\":null,\\\"homeAddress\\\":null,\\\"contacts\\\":null}\",\n        \"valueInfo\": {}\n    },\n    \"ESB_CUSTOMER_EXISTS\": {\n        \"type\": \"Boolean\",\n        \"value\": false,\n        \"valueInfo\": {}\n    },\n    \"ORGANIZATION_SLUG\": {\n        \"type\": \"String\",\n        \"value\": \"claro\",\n        \"valueInfo\": {}\n    },\n    \"ACTIVATION_TYPE\": {\n        \"type\": \"String\",\n        \"value\": \"MIGRATION\",\n        \"valueInfo\": {}\n    },\n    \"FLOW_TYPE\": {\n        \"type\": \"String\",\n        \"value\": \"migration\",\n        \"valueInfo\": {}\n    },\n    \"IMSI\": {\n        \"type\": \"String\",\n        \"value\": \"724051190127470\",\n        \"valueInfo\": {}\n    },\n    \"ICCID\": {\n        \"type\": \"String\",\n        \"value\": \"89550531110016328562\",\n        \"valueInfo\": {}\n    },\n    \"CHANNEL_ID\": {\n        \"type\": \"String\",\n        \"value\": \"6062f134-b4b1-41db-98ad-c3b289fed970\",\n        \"valueInfo\": {}\n    },\n    \"workflow\": {\n        \"type\": \"String\",\n        \"value\": \"migration\",\n        \"valueInfo\": {}\n    },\n    \"SIM_CARD_PARAMETERS\": {\n        \"type\": \"Object\",\n        \"value\": {\n            \"msisdn\": \"11913157776\",\n            \"iccid\": \"89550531110016328562\",\n            \"imsi\": \"724051190127470\",\n            \"pin1\": \"3636\",\n            \"pin2\": \"6363\",\n            \"puk1\": \"42424242\",\n            \"puk2\": \"24242424\",\n            \"tk\": \"8\",\n            \"ki\": \"wIeewOOOOOOOOOOOlFOOOOOOOOOOOOOOJ6\",\n            \"chv5\": \"3434311111111117\"\n        },\n        \"valueInfo\": {\n            \"objectTypeName\": \"br.com.zup.rw.claro.domain.data.simcard.SimCardParameters\",\n            \"serializationDataFormat\": \"application/x-java-serialized-object\"\n        }\n    },\n    \"CUSTOMER_ID\": {\n        \"type\": \"String\",\n        \"value\": \"5922a2ed-7e3e-4ef9-b781-91accbbdfc39\",\n        \"valueInfo\": {}\n    },\n    \"SERVICE_ORDER_ITEM_ID\": {\n        \"type\": \"String\",\n        \"value\": \"2129000\",\n        \"valueInfo\": {}\n    },\n    \"RESOURCE_CONNECTOR\": {\n        \"type\": \"String\",\n        \"value\": \"CS17\",\n        \"valueInfo\": {}\n    },\n    \"IMEI\": {\n        \"type\": \"String\",\n        \"value\": \"6138abdc58901bd5\",\n        \"valueInfo\": {}\n    },\n    \"GLOBAL_TRACKING_ID\": {\n        \"type\": \"String\",\n        \"value\": \"034283dd-ac19-4888-8b77-199bb78b8475\",\n        \"valueInfo\": {}\n    },\n    \"COM_ID\": {\n        \"type\": \"String\",\n        \"value\": \"JOIN-19d210f8-48ca-4f04-a9cf-0fe9f28585ce;d4c8623c-207b-4efa-8645-fa7b4df7d888\",\n        \"valueInfo\": {}\n    },\n    \"OBJECT\": {\n        \"type\": \"String\",\n        \"value\": \"PRODUCT\",\n        \"valueInfo\": {}\n    },\n    \"ESIM\": {\n        \"type\": \"Boolean\",\n        \"value\": false,\n        \"valueInfo\": {}\n    },\n    \"ACTION\": {\n        \"type\": \"String\",\n        \"value\": \"ADD\",\n        \"valueInfo\": {}\n    },\n    \"FLOW_PRIORITY\": {\n        \"type\": \"String\",\n        \"value\": \"100\",\n        \"valueInfo\": {}\n    },\n    \"WPP_REASON_ID\": {\n        \"type\": \"String\",\n        \"value\": \"TST\",\n        \"valueInfo\": {}\n    },\n    \"WPP_SITUATION_ID\": {\n        \"type\": \"String\",\n        \"value\": \"ATIVO\",\n        \"valueInfo\": {}\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Variable",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cc8d8292-f5cd-43d8-84e5-cf95071dfbae",
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "26039706-e2e68e2c-d0bb-4189-8283-b2efd36d7186",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-application-id",
+								"value": "flex"
+							},
+							{
+								"key": "x-organization-slug",
+								"value": "claro"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"modifications\": {\n    \"WPP_MANUALLY_PROCESSED\": {\n      \"value\": true,\n      \"type\": \"Boolean\"\n    }\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_camunda_join}}/clarocustom/engine-rest/process-instance/:processId/variables",
+							"host": [
+								"{{url_camunda_join}}"
+							],
+							"path": [
+								"clarocustom",
+								"engine-rest",
+								"process-instance",
+								":processId",
+								"variables"
+							],
+							"variable": [
+								{
+									"key": "processId",
+									"value": "d2f0d383-7f3f-11ef-b159-1a6ac08358e6"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "26039706-6e5070c4-57e7-48ac-91d3-6b65f0b72a9e",
+							"name": "204 - Sucesso",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-application-id",
+										"value": "flex"
+									},
+									{
+										"key": "x-organization-slug",
+										"value": "claro"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"skipCustomListeners\": true,\n  \"skipIoMappings\": true,\n  \"instructions\": [\n    {\n      \"type\": \"startBeforeActivity\",\n      \"activityId\": \"COM_CHANGE_VALUE_CALLBACK\"\n    },\n    {\n      \"type\": \"cancel\",\n      \"activityId\": \"OCS_CREATE_CUSTOMER\"\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url_camunda_som}}/clarocustom/engine-rest/process-instance/:processId/modification",
+									"host": [
+										"{{url_camunda_som}}"
+									],
+									"path": [
+										"clarocustom",
+										"engine-rest",
+										"process-instance",
+										":processId",
+										"modification"
+									],
+									"variable": [
+										{
+											"key": "processId",
+											"value": null
+										}
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 26 Sep 2024 20:20:49 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-envoy-upstream-service-time",
+									"value": "359"
+								},
+								{
+									"key": "server",
+									"value": "istio-envoy"
+								},
+								{
+									"key": "x-envoy-decorator-operation",
+									"value": "claro-realwave-extensions-custom-join-web.sit.svc.cluster.local:8080/*"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Get Job",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2964e839-f0c4-4fe8-84a0-d966128b8b3f",
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "26039706-595a45a6-ef43-478f-8009-0b264656e3a4",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-application-id",
+								"value": "flex"
+							},
+							{
+								"key": "x-organization-slug",
+								"value": "claro"
+							}
+						],
+						"url": {
+							"raw": "{{url_camunda_join}}/clarocustom/engine-rest/job?processInstanceId=310fc6d6-8639-11ef-a63f-de1d51a66983",
+							"host": [
+								"{{url_camunda_join}}"
+							],
+							"path": [
+								"clarocustom",
+								"engine-rest",
+								"job"
+							],
+							"query": [
+								{
+									"key": "processInstanceId",
+									"value": "310fc6d6-8639-11ef-a63f-de1d51a66983"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "26039706-3931083a-8928-46d0-a3ad-800524b10a19",
+							"name": "200 - Sucesso",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-application-id",
+										"value": "flex"
+									},
+									{
+										"key": "x-organization-slug",
+										"value": "claro"
+									}
+								],
+								"url": {
+									"raw": "{{url_camunda_som}}/clarocustom/engine-rest/job?processInstanceId=d2f0d383-7f3f-11ef-b159-1a6ac08358e6",
+									"host": [
+										"{{url_camunda_som}}"
+									],
+									"path": [
+										"clarocustom",
+										"engine-rest",
+										"job"
+									],
+									"query": [
+										{
+											"key": "processInstanceId",
+											"value": "d2f0d383-7f3f-11ef-b159-1a6ac08358e6"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 30 Sep 2024 15:25:50 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "723"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "cache-control",
+									"value": "no-cache"
+								},
+								{
+									"key": "x-envoy-upstream-service-time",
+									"value": "23"
+								},
+								{
+									"key": "server",
+									"value": "istio-envoy"
+								},
+								{
+									"key": "x-envoy-decorator-operation",
+									"value": "claro-extensions-custom-web.sit.svc.cluster.local:8080/*"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "[\n    {\n        \"id\": \"d3d407d6-7f3f-11ef-b159-1a6ac08358e6\",\n        \"jobDefinitionId\": \"8b803678-7ccd-11ef-944b-36b876c29b2b\",\n        \"processInstanceId\": \"d2f0d383-7f3f-11ef-b159-1a6ac08358e6\",\n        \"processDefinitionId\": \"wpp_execute:169:8b803675-7ccd-11ef-944b-36b876c29b2b\",\n        \"processDefinitionKey\": \"wpp_execute\",\n        \"executionId\": \"d2f0d383-7f3f-11ef-b159-1a6ac08358e6\",\n        \"exceptionMessage\": \"Erro ao executar a task: br.com.zup.rw.claro.custom.tasks.integration.esb.SubscriberPreActivationValidationTask. Flag desabilitada para prosseguir o fluxo do WPP (WPP_MANUALLY_PROCESSED = false).\",\n        \"failedActivityId\": \"SUBSCRIBER_PRE_ACTIVATION_VALIDATION\",\n        \"retries\": 0,\n        \"dueDate\": null,\n        \"suspended\": false,\n        \"priority\": 0,\n        \"tenantId\": null,\n        \"createTime\": \"2024-09-30T12:22:38.533-0300\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Retry Job",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "adf7bd8d-930d-407e-922f-3c191d9be7dc",
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "26039706-3e31ed77-3ecc-428c-af85-f8386d58437e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-application-id",
+								"value": "flex"
+							},
+							{
+								"key": "x-organization-slug",
+								"value": "claro"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"retries\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_camunda_join}}/clarocustom/engine-rest/job/:jobId/retries",
+							"host": [
+								"{{url_camunda_join}}"
+							],
+							"path": [
+								"clarocustom",
+								"engine-rest",
+								"job",
+								":jobId",
+								"retries"
+							],
+							"variable": [
+								{
+									"key": "jobId",
+									"value": "3d25ddcd-7f44-11ef-b159-1a6ac08358e6"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "26039706-eebda938-06b7-4a1e-94a3-afbd267aaa2f",
+							"name": "204 - Sucesso",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "x-application-id",
+										"value": "flex"
+									},
+									{
+										"key": "x-organization-slug",
+										"value": "claro"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"retries\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url_camunda_som}}/clarocustom/engine-rest/job/:jobId/retries",
+									"host": [
+										"{{url_camunda_som}}"
+									],
+									"path": [
+										"clarocustom",
+										"engine-rest",
+										"job",
+										":jobId",
+										"retries"
+									],
+									"variable": [
+										{
+											"key": "jobId",
+											"value": "3d25ddcd-7f44-11ef-b159-1a6ac08358e6"
+										}
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 30 Sep 2024 15:57:07 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-envoy-upstream-service-time",
+									"value": "74"
+								},
+								{
+									"key": "server",
+									"value": "istio-envoy"
+								},
+								{
+									"key": "x-envoy-decorator-operation",
+									"value": "claro-extensions-custom-web.sit.svc.cluster.local:8080/*"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": ""
+						}
+					]
+				}
+			],
+			"id": "26039706-fac458fd-2b69-4c33-b926-ff6766994188"
+		},
+		{
+			"name": "Renewal",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "33298e31-9da1-42a6-b5d8-b904e07b7f67",
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"  pm.globals.set('camunda_renewal_token', pm.cookies.get('JSESSIONID'))",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "26039706-620a343b-764e-4ff0-b01b-1525c09ed418",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json, text/plain, */*"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "renewal",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url_camunda_renewal}}/clarocustom/camunda/api/admin/auth/user/default/login/cockpit",
+							"host": [
+								"{{url_camunda_renewal}}"
+							],
+							"path": [
+								"clarocustom",
+								"camunda",
+								"api",
+								"admin",
+								"auth",
+								"user",
+								"default",
+								"login",
+								"cockpit"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "26039706-6ec3a011-8262-40c0-94e6-5c452871b097",
+							"name": "200 - Sucesso",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json, text/plain, */*"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "username",
+											"value": "{{user_camunda_com}}",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "{{password_camunda_com}}",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url_camunda_com}}/comcommand/api/admin/auth/user/default/login/cockpit",
+									"host": [
+										"{{url_camunda_com}}"
+									],
+									"path": [
+										"comcommand",
+										"api",
+										"admin",
+										"auth",
+										"user",
+										"default",
+										"login",
+										"cockpit"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 26 Sep 2024 20:23:58 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=UTF-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "76"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "tracking",
+									"value": "c050bc355e9b4dae854ef0fc84b6d128"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "JSESSIONID=TcKa7f3rRWzuJp51dJNB7W60bGyEa4n_Rhg-a1cH; path=/comcommand"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-Application-Context",
+									"value": "realwave-com-command-application:8080"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"userId\": \"admin\",\n    \"authorizedApps\": [\n        \"admin\",\n        \"tasklist\",\n        \"welcome\",\n        \"cockpit\"\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Find Processes Instances by Customer Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "563ecfe9-8f53-4860-b997-ca5ba299684a",
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"  const instances = pm.response.json()",
+									"  const urlCamunda = pm.environment.get('url_camunda_som')",
+									"  for (i = 0; i < instances.length; i++) {",
+									"    console.log(instances[i].definitionId)",
+									"    console.log(urlCamunda + '/clarocustom/camunda/app/cockpit/default/#/process-instance/' + instances[i].id)",
+									"  }",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "26039706-09d356a2-db18-440e-8f0c-e8895b1a89ff",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-application-id",
+								"value": "flex"
+							},
+							{
+								"key": "x-organization-slug",
+								"value": "claro"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"variables\": [\n    {\n      \"name\": \"CUSTOMER_ID\",\n      \"operator\": \"eq\",\n      \"value\": \"{{customer_id}}\"\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_camunda_renewal}}/clarocustom/engine-rest/process-instance?maxResults=10",
+							"host": [
+								"{{url_camunda_renewal}}"
+							],
+							"path": [
+								"clarocustom",
+								"engine-rest",
+								"process-instance"
+							],
+							"query": [
+								{
+									"key": "maxResults",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "26039706-18e5c6be-e552-4891-8799-71050eb4663d",
+							"name": "200 - Sucesso",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-application-id",
+										"value": "flex"
+									},
+									{
+										"key": "x-organization-slug",
+										"value": "claro"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"variables\": [\n    {\n      \"name\": \"CUSTOMER_ID\",\n      \"operator\": \"eq\",\n      \"value\": \"{{customer_id}}\"\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url_camunda_som}}/clarocustom/engine-rest/process-instance?maxResults=10",
+									"host": [
+										"{{url_camunda_som}}"
+									],
+									"path": [
+										"clarocustom",
+										"engine-rest",
+										"process-instance"
+									],
+									"query": [
+										{
+											"key": "maxResults",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 26 Sep 2024 20:20:49 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "471"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-envoy-upstream-service-time",
+									"value": "359"
+								},
+								{
+									"key": "server",
+									"value": "istio-envoy"
+								},
+								{
+									"key": "x-envoy-decorator-operation",
+									"value": "claro-realwave-extensions-custom-join-web.sit.svc.cluster.local:8080/*"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "[\n    {\n        \"links\": [],\n        \"id\": \"4eb0e218-7c44-11ef-a13f-9aa31cf95e18\",\n        \"definitionId\": \"product_manager:167:036c3610-7c3c-11ef-9d71-caf0a4463923\",\n        \"businessKey\": \"MIGRATION_SO_1017766\",\n        \"caseInstanceId\": null,\n        \"ended\": false,\n        \"suspended\": false,\n        \"tenantId\": null\n    },\n    {\n        \"links\": [],\n        \"id\": \"500e2859-7c44-11ef-b061-fe40c77b6d67\",\n        \"definitionId\": \"migration:170:03cc7ee0-7c3c-11ef-9d71-caf0a4463923\",\n        \"businessKey\": \"MIGRATION_SO_1017766\",\n        \"caseInstanceId\": null,\n        \"ended\": false,\n        \"suspended\": false,\n        \"tenantId\": null\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Skip Activity",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3aacd428-1143-4fcb-81d5-0ea25ccfac81",
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "26039706-040c3adb-6cc2-45be-9315-c7814f13b50f",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-application-id",
+								"value": "flex"
+							},
+							{
+								"key": "x-organization-slug",
+								"value": "claro"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"skipCustomListeners\": true,\n  \"skipIoMappings\": true,\n  \"instructions\": [\n    {\n      \"type\": \"startBeforeActivity\",\n      \"activityId\": \"COM_CHANGE_VALUE_CALLBACK\"\n    },\n    {\n      \"type\": \"cancel\",\n      \"activityId\": \"OCS_CREATE_CUSTOMER\"\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_camunda_renewal}}/clarocustom/engine-rest/process-instance/:processId/modification",
+							"host": [
+								"{{url_camunda_renewal}}"
+							],
+							"path": [
+								"clarocustom",
+								"engine-rest",
+								"process-instance",
+								":processId",
+								"modification"
+							],
+							"variable": [
+								{
+									"key": "processId",
+									"value": "9b7a3964-7c49-11ef-a36c-fe9252fa06bf"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "26039706-9093ea7c-b66a-4bf3-a639-711b1bedb175",
+							"name": "204 - Sucesso",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-application-id",
+										"value": "flex"
+									},
+									{
+										"key": "x-organization-slug",
+										"value": "claro"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"skipCustomListeners\": true,\n  \"skipIoMappings\": true,\n  \"instructions\": [\n    {\n      \"type\": \"startBeforeActivity\",\n      \"activityId\": \"COM_CHANGE_VALUE_CALLBACK\"\n    },\n    {\n      \"type\": \"cancel\",\n      \"activityId\": \"OCS_CREATE_CUSTOMER\"\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url_camunda_som}}/clarocustom/engine-rest/process-instance/:processId/modification",
+									"host": [
+										"{{url_camunda_som}}"
+									],
+									"path": [
+										"clarocustom",
+										"engine-rest",
+										"process-instance",
+										":processId",
+										"modification"
+									],
+									"variable": [
+										{
+											"key": "processId",
+											"value": null
+										}
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 26 Sep 2024 20:20:49 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-envoy-upstream-service-time",
+									"value": "359"
+								},
+								{
+									"key": "server",
+									"value": "istio-envoy"
+								},
+								{
+									"key": "x-envoy-decorator-operation",
+									"value": "claro-realwave-extensions-custom-join-web.sit.svc.cluster.local:8080/*"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Get Variables",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "30fb4ba7-0788-480f-b8ad-1f8fb678e510",
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "26039706-ff41cb58-3210-4a3c-b598-f72f64647c70",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-application-id",
+								"value": "flex"
+							},
+							{
+								"key": "x-organization-slug",
+								"value": "claro"
+							}
+						],
+						"url": {
+							"raw": "{{url_camunda_renewal}}/clarocustom/engine-rest/process-instance/:processId/variables",
+							"host": [
+								"{{url_camunda_renewal}}"
+							],
+							"path": [
+								"clarocustom",
+								"engine-rest",
+								"process-instance",
+								":processId",
+								"variables"
+							],
+							"variable": [
+								{
+									"key": "processId",
+									"value": "d2f0d383-7f3f-11ef-b159-1a6ac08358e6"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "26039706-5abc5da3-ea14-4625-9e02-be473438d01c",
+							"name": "200 - Sucesso",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-application-id",
+										"value": "flex"
+									},
+									{
+										"key": "x-organization-slug",
+										"value": "claro"
+									}
+								],
+								"url": {
+									"raw": "{{url_camunda_som}}/clarocustom/engine-rest/process-instance/:processId/variables",
+									"host": [
+										"{{url_camunda_som}}"
+									],
+									"path": [
+										"clarocustom",
+										"engine-rest",
+										"process-instance",
+										":processId",
+										"variables"
+									],
+									"variable": [
+										{
+											"key": "processId",
+											"value": "d2f0d383-7f3f-11ef-b159-1a6ac08358e6"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 30 Sep 2024 15:24:27 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "3966"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "cache-control",
+									"value": "no-cache"
+								},
+								{
+									"key": "x-envoy-upstream-service-time",
+									"value": "77"
+								},
+								{
+									"key": "server",
+									"value": "istio-envoy"
+								},
+								{
+									"key": "x-envoy-decorator-operation",
+									"value": "claro-extensions-custom-web.sit.svc.cluster.local:8080/*"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"DOCUMENT_NUMBER\": {\n        \"type\": \"String\",\n        \"value\": \"15992105840\",\n        \"valueInfo\": {}\n    },\n    \"WPP_MANUALLY_PROCESSED\": {\n        \"type\": \"Boolean\",\n        \"value\": false,\n        \"valueInfo\": {}\n    },\n    \"MSISDN\": {\n        \"type\": \"String\",\n        \"value\": \"5511913157776\",\n        \"valueInfo\": {}\n    },\n    \"DDD\": {\n        \"type\": \"String\",\n        \"value\": \"11\",\n        \"valueInfo\": {}\n    },\n    \"APPLICATION_ID\": {\n        \"type\": \"String\",\n        \"value\": \"ac76a7739985cdacad94eecd7f04ff64a97e0e93\",\n        \"valueInfo\": {}\n    },\n    \"PRE_ACTIVATION\": {\n        \"type\": \"String\",\n        \"value\": \"TRUE\",\n        \"valueInfo\": {}\n    },\n    \"ESB_CUSTOMER\": {\n        \"type\": \"String\",\n        \"value\": \"{\\\"physicalPeople\\\":[{\\\"personType\\\":\\\"PF\\\",\\\"addresses\\\":null,\\\"registerAudit\\\":null,\\\"originSystemRegister\\\":null,\\\"marketingData\\\":null,\\\"accounts\\\":null,\\\"contracts\\\":null,\\\"registerDataPhysicalPerson\\\":{\\\"treatment\\\":null,\\\"name\\\":\\\"Marli Isabel Sara Pinto\\\",\\\"birthDate\\\":null,\\\"motherName\\\":null,\\\"gender\\\":null,\\\"nationality\\\":null,\\\"documentNumber\\\":\\\"15992105840\\\",\\\"generalRegistration\\\":null,\\\"foreignGeneralRegistration\\\":null,\\\"passportNumber\\\":null,\\\"passportCountryId\\\":null,\\\"contacts\\\":[{\\\"name\\\":\\\"PRINCIPAL\\\",\\\"phoneNumber\\\":null,\\\"branchLine\\\":null,\\\"email\\\":\\\"15992105840@gmail.com\\\"}]},\\\"socialEconomicDataPhysicalPerson\\\":{\\\"occupation\\\":null,\\\"degreeEducation\\\":null,\\\"employer\\\":null,\\\"office\\\":null,\\\"admissionDate\\\":null,\\\"salaryRange\\\":null,\\\"maritalStatus\\\":null,\\\"physicalPersonType\\\":null,\\\"contributorIndicator\\\":null,\\\"numberOfDependents\\\":null,\\\"houseOwnIndicator\\\":null,\\\"contributorIndicatorFomeZero\\\":null,\\\"contributorIndicatorFundoPobreza\\\":null,\\\"conditionFiscalSpecialMemberEmbassy\\\":null},\\\"registerSituation\\\":null,\\\"homeAddress\\\":{\\\"functionAddress\\\":\\\"11\\\",\\\"prefix\\\":\\\"RUA\\\",\\\"streetName\\\":\\\"Rua Particular\\\",\\\"number\\\":\\\"412\\\",\\\"complement\\\":\\\"n/d\\\",\\\"neighborhood\\\":\\\"Jardim Monte Verde\\\",\\\"city\\\":\\\"São Paulo\\\",\\\"state\\\":\\\"SP\\\",\\\"zipCode\\\":\\\"04851510\\\",\\\"ibgeCityId\\\":\\\"3550308\\\",\\\"ibgeUfId\\\":\\\"35\\\",\\\"dddNumber\\\":\\\"11\\\",\\\"country\\\":{\\\"name\\\":\\\"Brasil\\\"}}}],\\\"legalPeople\\\":null,\\\"contracts\\\":null}\",\n        \"valueInfo\": {}\n    },\n    \"CUSTOMER_ESB_TO_RW_INFO\": {\n        \"type\": \"String\",\n        \"value\": \"{\\\"basicInfo\\\":null,\\\"homeAddress\\\":null,\\\"contacts\\\":null}\",\n        \"valueInfo\": {}\n    },\n    \"ESB_CUSTOMER_EXISTS\": {\n        \"type\": \"Boolean\",\n        \"value\": false,\n        \"valueInfo\": {}\n    },\n    \"ORGANIZATION_SLUG\": {\n        \"type\": \"String\",\n        \"value\": \"claro\",\n        \"valueInfo\": {}\n    },\n    \"ACTIVATION_TYPE\": {\n        \"type\": \"String\",\n        \"value\": \"MIGRATION\",\n        \"valueInfo\": {}\n    },\n    \"FLOW_TYPE\": {\n        \"type\": \"String\",\n        \"value\": \"migration\",\n        \"valueInfo\": {}\n    },\n    \"IMSI\": {\n        \"type\": \"String\",\n        \"value\": \"724051190127470\",\n        \"valueInfo\": {}\n    },\n    \"ICCID\": {\n        \"type\": \"String\",\n        \"value\": \"89550531110016328562\",\n        \"valueInfo\": {}\n    },\n    \"CHANNEL_ID\": {\n        \"type\": \"String\",\n        \"value\": \"6062f134-b4b1-41db-98ad-c3b289fed970\",\n        \"valueInfo\": {}\n    },\n    \"workflow\": {\n        \"type\": \"String\",\n        \"value\": \"migration\",\n        \"valueInfo\": {}\n    },\n    \"SIM_CARD_PARAMETERS\": {\n        \"type\": \"Object\",\n        \"value\": {\n            \"msisdn\": \"11913157776\",\n            \"iccid\": \"89550531110016328562\",\n            \"imsi\": \"724051190127470\",\n            \"pin1\": \"3636\",\n            \"pin2\": \"6363\",\n            \"puk1\": \"42424242\",\n            \"puk2\": \"24242424\",\n            \"tk\": \"8\",\n            \"ki\": \"wIeewOOOOOOOOOOOlFOOOOOOOOOOOOOOJ6\",\n            \"chv5\": \"3434311111111117\"\n        },\n        \"valueInfo\": {\n            \"objectTypeName\": \"br.com.zup.rw.claro.domain.data.simcard.SimCardParameters\",\n            \"serializationDataFormat\": \"application/x-java-serialized-object\"\n        }\n    },\n    \"CUSTOMER_ID\": {\n        \"type\": \"String\",\n        \"value\": \"5922a2ed-7e3e-4ef9-b781-91accbbdfc39\",\n        \"valueInfo\": {}\n    },\n    \"SERVICE_ORDER_ITEM_ID\": {\n        \"type\": \"String\",\n        \"value\": \"2129000\",\n        \"valueInfo\": {}\n    },\n    \"RESOURCE_CONNECTOR\": {\n        \"type\": \"String\",\n        \"value\": \"CS17\",\n        \"valueInfo\": {}\n    },\n    \"IMEI\": {\n        \"type\": \"String\",\n        \"value\": \"6138abdc58901bd5\",\n        \"valueInfo\": {}\n    },\n    \"GLOBAL_TRACKING_ID\": {\n        \"type\": \"String\",\n        \"value\": \"034283dd-ac19-4888-8b77-199bb78b8475\",\n        \"valueInfo\": {}\n    },\n    \"COM_ID\": {\n        \"type\": \"String\",\n        \"value\": \"JOIN-19d210f8-48ca-4f04-a9cf-0fe9f28585ce;d4c8623c-207b-4efa-8645-fa7b4df7d888\",\n        \"valueInfo\": {}\n    },\n    \"OBJECT\": {\n        \"type\": \"String\",\n        \"value\": \"PRODUCT\",\n        \"valueInfo\": {}\n    },\n    \"ESIM\": {\n        \"type\": \"Boolean\",\n        \"value\": false,\n        \"valueInfo\": {}\n    },\n    \"ACTION\": {\n        \"type\": \"String\",\n        \"value\": \"ADD\",\n        \"valueInfo\": {}\n    },\n    \"FLOW_PRIORITY\": {\n        \"type\": \"String\",\n        \"value\": \"100\",\n        \"valueInfo\": {}\n    },\n    \"WPP_REASON_ID\": {\n        \"type\": \"String\",\n        \"value\": \"TST\",\n        \"valueInfo\": {}\n    },\n    \"WPP_SITUATION_ID\": {\n        \"type\": \"String\",\n        \"value\": \"ATIVO\",\n        \"valueInfo\": {}\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Variable",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cc8d8292-f5cd-43d8-84e5-cf95071dfbae",
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "26039706-3451ca6c-b8ec-45a8-a49a-bb2586de153f",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-application-id",
+								"value": "flex"
+							},
+							{
+								"key": "x-organization-slug",
+								"value": "claro"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"modifications\": {\n    \"WPP_MANUALLY_PROCESSED\": {\n      \"value\": true,\n      \"type\": \"Boolean\"\n    }\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_camunda_renewal}}/clarocustom/engine-rest/process-instance/:processId/variables",
+							"host": [
+								"{{url_camunda_renewal}}"
+							],
+							"path": [
+								"clarocustom",
+								"engine-rest",
+								"process-instance",
+								":processId",
+								"variables"
+							],
+							"variable": [
+								{
+									"key": "processId",
+									"value": "d2f0d383-7f3f-11ef-b159-1a6ac08358e6"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "26039706-9d242bd6-80b0-494d-a2e1-f8fe108cc689",
+							"name": "204 - Sucesso",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-application-id",
+										"value": "flex"
+									},
+									{
+										"key": "x-organization-slug",
+										"value": "claro"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"skipCustomListeners\": true,\n  \"skipIoMappings\": true,\n  \"instructions\": [\n    {\n      \"type\": \"startBeforeActivity\",\n      \"activityId\": \"COM_CHANGE_VALUE_CALLBACK\"\n    },\n    {\n      \"type\": \"cancel\",\n      \"activityId\": \"OCS_CREATE_CUSTOMER\"\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url_camunda_som}}/clarocustom/engine-rest/process-instance/:processId/modification",
+									"host": [
+										"{{url_camunda_som}}"
+									],
+									"path": [
+										"clarocustom",
+										"engine-rest",
+										"process-instance",
+										":processId",
+										"modification"
+									],
+									"variable": [
+										{
+											"key": "processId",
+											"value": null
+										}
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 26 Sep 2024 20:20:49 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-envoy-upstream-service-time",
+									"value": "359"
+								},
+								{
+									"key": "server",
+									"value": "istio-envoy"
+								},
+								{
+									"key": "x-envoy-decorator-operation",
+									"value": "claro-realwave-extensions-custom-join-web.sit.svc.cluster.local:8080/*"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Get Job",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2964e839-f0c4-4fe8-84a0-d966128b8b3f",
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "26039706-0cb96a3a-0b51-4a82-ac6f-4fc421b1b1e7",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-application-id",
+								"value": "flex"
+							},
+							{
+								"key": "x-organization-slug",
+								"value": "claro"
+							}
+						],
+						"url": {
+							"raw": "{{url_camunda_renewal}}/clarocustom/engine-rest/job?processInstanceId=310fc6d6-8639-11ef-a63f-de1d51a66983",
+							"host": [
+								"{{url_camunda_renewal}}"
+							],
+							"path": [
+								"clarocustom",
+								"engine-rest",
+								"job"
+							],
+							"query": [
+								{
+									"key": "processInstanceId",
+									"value": "310fc6d6-8639-11ef-a63f-de1d51a66983"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "26039706-86f01edd-a710-4eec-9786-5230cee8f370",
+							"name": "200 - Sucesso",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-application-id",
+										"value": "flex"
+									},
+									{
+										"key": "x-organization-slug",
+										"value": "claro"
+									}
+								],
+								"url": {
+									"raw": "{{url_camunda_som}}/clarocustom/engine-rest/job?processInstanceId=d2f0d383-7f3f-11ef-b159-1a6ac08358e6",
+									"host": [
+										"{{url_camunda_som}}"
+									],
+									"path": [
+										"clarocustom",
+										"engine-rest",
+										"job"
+									],
+									"query": [
+										{
+											"key": "processInstanceId",
+											"value": "d2f0d383-7f3f-11ef-b159-1a6ac08358e6"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 30 Sep 2024 15:25:50 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "723"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "cache-control",
+									"value": "no-cache"
+								},
+								{
+									"key": "x-envoy-upstream-service-time",
+									"value": "23"
+								},
+								{
+									"key": "server",
+									"value": "istio-envoy"
+								},
+								{
+									"key": "x-envoy-decorator-operation",
+									"value": "claro-extensions-custom-web.sit.svc.cluster.local:8080/*"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "[\n    {\n        \"id\": \"d3d407d6-7f3f-11ef-b159-1a6ac08358e6\",\n        \"jobDefinitionId\": \"8b803678-7ccd-11ef-944b-36b876c29b2b\",\n        \"processInstanceId\": \"d2f0d383-7f3f-11ef-b159-1a6ac08358e6\",\n        \"processDefinitionId\": \"wpp_execute:169:8b803675-7ccd-11ef-944b-36b876c29b2b\",\n        \"processDefinitionKey\": \"wpp_execute\",\n        \"executionId\": \"d2f0d383-7f3f-11ef-b159-1a6ac08358e6\",\n        \"exceptionMessage\": \"Erro ao executar a task: br.com.zup.rw.claro.custom.tasks.integration.esb.SubscriberPreActivationValidationTask. Flag desabilitada para prosseguir o fluxo do WPP (WPP_MANUALLY_PROCESSED = false).\",\n        \"failedActivityId\": \"SUBSCRIBER_PRE_ACTIVATION_VALIDATION\",\n        \"retries\": 0,\n        \"dueDate\": null,\n        \"suspended\": false,\n        \"priority\": 0,\n        \"tenantId\": null,\n        \"createTime\": \"2024-09-30T12:22:38.533-0300\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Retry Job",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "adf7bd8d-930d-407e-922f-3c191d9be7dc",
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "26039706-df548cdc-6333-4258-9bc7-2594e2cfb365",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-application-id",
+								"value": "flex"
+							},
+							{
+								"key": "x-organization-slug",
+								"value": "claro"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"retries\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_camunda_renewal}}/clarocustom/engine-rest/job/:jobId/retries",
+							"host": [
+								"{{url_camunda_renewal}}"
+							],
+							"path": [
+								"clarocustom",
+								"engine-rest",
+								"job",
+								":jobId",
+								"retries"
+							],
+							"variable": [
+								{
+									"key": "jobId",
+									"value": "3d25ddcd-7f44-11ef-b159-1a6ac08358e6"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "26039706-783b88aa-08e6-437f-aa39-073302dc235d",
+							"name": "204 - Sucesso",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "x-application-id",
+										"value": "flex"
+									},
+									{
+										"key": "x-organization-slug",
+										"value": "claro"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"retries\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url_camunda_som}}/clarocustom/engine-rest/job/:jobId/retries",
+									"host": [
+										"{{url_camunda_som}}"
+									],
+									"path": [
+										"clarocustom",
+										"engine-rest",
+										"job",
+										":jobId",
+										"retries"
+									],
+									"variable": [
+										{
+											"key": "jobId",
+											"value": "3d25ddcd-7f44-11ef-b159-1a6ac08358e6"
+										}
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 30 Sep 2024 15:57:07 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-envoy-upstream-service-time",
+									"value": "74"
+								},
+								{
+									"key": "server",
+									"value": "istio-envoy"
+								},
+								{
+									"key": "x-envoy-decorator-operation",
+									"value": "claro-extensions-custom-web.sit.svc.cluster.local:8080/*"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": ""
+						}
+					]
+				}
+			],
+			"id": "26039706-5053d9b9-ce3f-4cca-bf2f-b6b05d409d68"
+		},
+		{
+			"name": "COM",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "33298e31-9da1-42a6-b5d8-b904e07b7f67",
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"  pm.globals.set('camunda_com_token', pm.cookies.get('JSESSIONID'))",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "26039706-ff2b3317-0edf-427f-96b6-33466c383e37",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json, text/plain, */*"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "{{user_camunda_com}}",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "{{password_camunda_com}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url_camunda_com}}/comcommand/api/admin/auth/user/default/login/cockpit",
+							"host": [
+								"{{url_camunda_com}}"
+							],
+							"path": [
+								"comcommand",
+								"api",
+								"admin",
+								"auth",
+								"user",
+								"default",
+								"login",
+								"cockpit"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "26039706-f95039b0-384d-4949-8cc4-2b945d108a1c",
+							"name": "200 - Sucesso",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json, text/plain, */*"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "username",
+											"value": "{{user_camunda_com}}",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "{{password_camunda_com}}",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url_camunda_com}}/comcommand/api/admin/auth/user/default/login/cockpit",
+									"host": [
+										"{{url_camunda_com}}"
+									],
+									"path": [
+										"comcommand",
+										"api",
+										"admin",
+										"auth",
+										"user",
+										"default",
+										"login",
+										"cockpit"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 26 Sep 2024 20:23:58 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=UTF-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "76"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "tracking",
+									"value": "c050bc355e9b4dae854ef0fc84b6d128"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "JSESSIONID=TcKa7f3rRWzuJp51dJNB7W60bGyEa4n_Rhg-a1cH; path=/comcommand"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-Application-Context",
+									"value": "realwave-com-command-application:8080"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"userId\": \"admin\",\n    \"authorizedApps\": [\n        \"admin\",\n        \"tasklist\",\n        \"welcome\",\n        \"cockpit\"\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Find Processes Instances by Customer Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"  const instances = pm.response.json()",
+									"  const urlCamunda = pm.environment.get('url_camunda_com')",
+									"  for (i = 0; i < instances.length; i++) {",
+									"    console.log(instances[i].businessKey)",
+									"    console.log(urlCamunda + '/comcommand/app/cockpit/default/#/process-instance/' + instances[i].id)",
+									"  }",
+									"}"
+								],
+								"type": "text/javascript",
+								"id": "d0303db6-ff0d-428c-a324-a5c40d21a35b"
+							}
+						}
+					],
+					"id": "26039706-c5c2ebc3-598d-4f66-9ba4-7222ceffd3fb",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "cookie",
+								"value": "JSESSIONID={{camunda_com_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"variables\": [\n    {\n      \"name\": \"X-Customer-Id\",\n      \"operator\": \"eq\",\n      \"value\": \"{{customer_id}}\"\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_camunda_com}}/comcommand/api/cockpit/plugin/base/default/process-instance",
+							"host": [
+								"{{url_camunda_com}}"
+							],
+							"path": [
+								"comcommand",
+								"api",
+								"cockpit",
+								"plugin",
+								"base",
+								"default",
+								"process-instance"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "26039706-d8856239-46ae-49d1-b7d2-90090c02eba3",
+							"name": "200 - Sucesso",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "cookie",
+										"value": "JSESSIONID={{camunda_com_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"variables\": [\n    {\n      \"name\": \"X-Customer-Id\",\n      \"operator\": \"eq\",\n      \"value\": \"{{customer_id}}\"\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url_camunda_com}}/comcommand/api/cockpit/plugin/base/default/process-instance",
+									"host": [
+										"{{url_camunda_com}}"
+									],
+									"path": [
+										"comcommand",
+										"api",
+										"cockpit",
+										"plugin",
+										"base",
+										"default",
+										"process-instance"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 26 Sep 2024 20:24:14 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=UTF-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "309"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "tracking",
+									"value": "8d705fe48fe746f796816e40d805b368"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "X-Authorized-Engine",
+									"value": "default"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "X-Authorized-User",
+									"value": "admin"
+								},
+								{
+									"key": "X-Authorized-Apps",
+									"value": "admin,tasklist,welcome,cockpit"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-Application-Context",
+									"value": "realwave-com-command-application:8080"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "[\n    {\n        \"id\": \"44c55d10-7c44-11ef-a678-22dd326eaf0a\",\n        \"businessKey\": \"JOIN-3d7d48e9-22d4-4472-999d-b1e5477773bc\",\n        \"startTime\": null,\n        \"incidents\": [],\n        \"suspended\": false\n    },\n    {\n        \"id\": \"46373c33-7c44-11ef-a36c-fe9252fa06bf\",\n        \"businessKey\": \"JOIN-3d7d48e9-22d4-4472-999d-b1e5477773bc\",\n        \"startTime\": null,\n        \"incidents\": [],\n        \"suspended\": false\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Skip Activity",
+					"id": "26039706-ba3be2fa-5a13-4b87-9755-ce7c18a15bd1",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "cookie",
+								"value": "JSESSIONID={{camunda_com_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"skipCustomListeners\": true,\n  \"skipIoMappings\": true,\n  \"instructions\": [\n    {\n      \"type\": \"startBeforeActivity\",\n      \"activityId\": \"REGISTER_PRODUCTS_ON_CIM\"\n    },\n    {\n      \"type\": \"cancel\",\n      \"activityId\": \"SUBSCRIBE\"\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_camunda_com}}/comcommand/api/engine/engine/default/process-instance/:processId/modification",
+							"host": [
+								"{{url_camunda_com}}"
+							],
+							"path": [
+								"comcommand",
+								"api",
+								"engine",
+								"engine",
+								"default",
+								"process-instance",
+								":processId",
+								"modification"
+							],
+							"variable": [
+								{
+									"key": "processId",
+									"value": "954d2b40-67d6-11f0-9f0a-de99e871e598"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "26039706-a66434ec-1312-43b3-832a-02c8761bb40c",
+							"name": "204 - Sucesso",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "cookie",
+										"value": "JSESSIONID={{camunda_com_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"skipCustomListeners\": true,\n  \"skipIoMappings\": true,\n  \"instructions\": [\n    {\n      \"type\": \"startBeforeActivity\",\n      \"activityId\": \"ParallelGateway_0d6t2b9\"\n    },\n    {\n      \"type\": \"cancel\",\n      \"activityId\": \"WAIT_INSTALL_OFFER_ON_SOM\"\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url_camunda_com}}/comcommand/api/engine/engine/default/process-instance/:processId/modification",
+									"host": [
+										"{{url_camunda_com}}"
+									],
+									"path": [
+										"comcommand",
+										"api",
+										"engine",
+										"engine",
+										"default",
+										"process-instance",
+										":processId",
+										"modification"
+									],
+									"variable": [
+										{
+											"key": "processId",
+											"value": "9b7a3964-7c49-11ef-a36c-fe9252fa06bf"
+										}
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 30 Sep 2024 12:52:32 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "tracking",
+									"value": "49695520c4064ba1b31621fa25bc5af0"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "X-Authorized-Engine",
+									"value": "default"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "X-Authorized-User",
+									"value": "admin"
+								},
+								{
+									"key": "X-Authorized-Apps",
+									"value": "admin,tasklist,welcome,cockpit"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-Application-Context",
+									"value": "realwave-com-command-application:8080"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Get Jobs",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2964e839-f0c4-4fe8-84a0-d966128b8b3f",
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "26039706-46b5394b-67b9-4f1c-9ec9-4d90da5631b5",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-application-id",
+								"value": "flex"
+							},
+							{
+								"key": "x-organization-slug",
+								"value": "claro"
+							}
+						],
+						"url": {
+							"raw": "{{url_camunda_com}}/comcommand/api/engine/engine/default/job?processInstanceId=4d18ca60-e881-11ef-a3f1-16a43d8fefd5",
+							"host": [
+								"{{url_camunda_com}}"
+							],
+							"path": [
+								"comcommand",
+								"api",
+								"engine",
+								"engine",
+								"default",
+								"job"
+							],
+							"query": [
+								{
+									"key": "processInstanceId",
+									"value": "4d18ca60-e881-11ef-a3f1-16a43d8fefd5"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "26039706-e6f8cee9-4708-4497-a8ff-e98e982286fe",
+							"name": "200 - Sucesso",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-application-id",
+										"value": "flex"
+									},
+									{
+										"key": "x-organization-slug",
+										"value": "claro"
+									}
+								],
+								"url": {
+									"raw": "{{url_camunda_som}}/clarocustom/engine-rest/job?processInstanceId=d2f0d383-7f3f-11ef-b159-1a6ac08358e6",
+									"host": [
+										"{{url_camunda_som}}"
+									],
+									"path": [
+										"clarocustom",
+										"engine-rest",
+										"job"
+									],
+									"query": [
+										{
+											"key": "processInstanceId",
+											"value": "d2f0d383-7f3f-11ef-b159-1a6ac08358e6"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 30 Sep 2024 15:25:50 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "723"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "cache-control",
+									"value": "no-cache"
+								},
+								{
+									"key": "x-envoy-upstream-service-time",
+									"value": "23"
+								},
+								{
+									"key": "server",
+									"value": "istio-envoy"
+								},
+								{
+									"key": "x-envoy-decorator-operation",
+									"value": "claro-extensions-custom-web.sit.svc.cluster.local:8080/*"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "[\n    {\n        \"id\": \"d3d407d6-7f3f-11ef-b159-1a6ac08358e6\",\n        \"jobDefinitionId\": \"8b803678-7ccd-11ef-944b-36b876c29b2b\",\n        \"processInstanceId\": \"d2f0d383-7f3f-11ef-b159-1a6ac08358e6\",\n        \"processDefinitionId\": \"wpp_execute:169:8b803675-7ccd-11ef-944b-36b876c29b2b\",\n        \"processDefinitionKey\": \"wpp_execute\",\n        \"executionId\": \"d2f0d383-7f3f-11ef-b159-1a6ac08358e6\",\n        \"exceptionMessage\": \"Erro ao executar a task: br.com.zup.rw.claro.custom.tasks.integration.esb.SubscriberPreActivationValidationTask. Flag desabilitada para prosseguir o fluxo do WPP (WPP_MANUALLY_PROCESSED = false).\",\n        \"failedActivityId\": \"SUBSCRIBER_PRE_ACTIVATION_VALIDATION\",\n        \"retries\": 0,\n        \"dueDate\": null,\n        \"suspended\": false,\n        \"priority\": 0,\n        \"tenantId\": null,\n        \"createTime\": \"2024-09-30T12:22:38.533-0300\"\n    }\n]"
+						}
+					]
+				}
+			],
+			"id": "26039706-950297d4-7f80-40bf-a7d8-16cc878b04eb"
+		},
+		{
+			"name": "Get Customer By CPF",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2ddb3d53-d23b-40ab-b082-254150d7c60c",
+						"exec": [
+							"if (pm.response.code === 200) {",
+							"  pm.globals.set(\"customer_id\", pm.response.json().content.customer.id)",
+							"  pm.globals.set(\"cpf\", pm.response.json().content.customer.documents[0].number)",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "26039706-1643519c-2e4c-4d5b-921f-cda30d9dc0c5",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-application-key",
+						"value": "{{app_key}}"
+					},
+					{
+						"key": "x-application-id",
+						"value": "{{app_id}}"
+					},
+					{
+						"key": "x-organization-slug",
+						"value": "{{org_slug}}"
+					},
+					{
+						"key": "x-channel-id",
+						"value": "{{channel_id}}"
+					},
+					{
+						"key": "x-app-version",
+						"value": "{{app_version}}",
+						"type": "text"
+					},
+					{
+						"key": "x-platform-version",
+						"value": "{{platform_version}}",
+						"type": "text"
+					},
+					{
+						"key": "x-platform",
+						"value": "{{platform}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url_gw_claro}}/ext-application/v1/customer/:cpf",
+					"host": [
+						"{{url_gw_claro}}"
+					],
+					"path": [
+						"ext-application",
+						"v1",
+						"customer",
+						":cpf"
+					],
+					"variable": [
+						{
+							"key": "cpf",
+							"value": "{{cpf}}"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"id": "26039706-5b38ff88-b913-4016-9a15-d8be9adfa830",
+					"name": "404 - Não Encontrado Copy",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-application-key",
+								"value": "{{app_key}}"
+							},
+							{
+								"key": "x-application-id",
+								"value": "{{app_id}}"
+							},
+							{
+								"key": "x-organization-slug",
+								"value": "{{org_slug}}"
+							},
+							{
+								"key": "x-channel-id",
+								"value": "{{channel_id}}"
+							},
+							{
+								"key": "x-app-version",
+								"value": "{{app_version}}",
+								"type": "text"
+							},
+							{
+								"key": "x-platform-version",
+								"value": "{{platform_version}}",
+								"type": "text"
+							},
+							{
+								"key": "x-platform",
+								"value": "{{platform}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_gw_claro}}/ext-application/v1/customer/:cpf",
+							"host": [
+								"{{url_gw_claro}}"
+							],
+							"path": [
+								"ext-application",
+								"v1",
+								"customer",
+								":cpf"
+							],
+							"variable": [
+								{
+									"key": "cpf",
+									"value": "{{cpf}}"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Fri, 27 Sep 2024 20:12:05 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json;charset=utf-8"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "x-application-context",
+							"value": "Claro Extensions:sit:8080"
+						},
+						{
+							"key": "localtrackingid",
+							"value": "e4c70158af7942d49d8d69d3e3adf769"
+						},
+						{
+							"key": "x-tracking-source",
+							"value": "b9a20113855a45f1b060e142dbf32ebe"
+						},
+						{
+							"key": "x-envoy-upstream-service-time",
+							"value": "83"
+						},
+						{
+							"key": "server",
+							"value": "istio-envoy"
+						},
+						{
+							"key": "x-envoy-decorator-operation",
+							"value": "claro-realwave-extensions-application.sit.svc.cluster.local:8080/*"
+						},
+						{
+							"key": "x-request-id",
+							"value": "9106b7375baad9e9b25799bd54e92c801483cf06f83aa5cdc3c792a553c63f7a"
+						},
+						{
+							"key": "cache-control",
+							"value": "no-store, max-age=0"
+						},
+						{
+							"key": "strict-transport-security",
+							"value": "max-age=15768000"
+						},
+						{
+							"key": "x-frame-options",
+							"value": "DENY"
+						},
+						{
+							"key": "x-xss-protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "x-download-options",
+							"value": "noopen"
+						},
+						{
+							"key": "x-content-type-options",
+							"value": "nosniff"
+						},
+						{
+							"key": "vary",
+							"value": "accept-encoding"
+						},
+						{
+							"key": "content-encoding",
+							"value": "gzip"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "{\n    \"code\": \"customer.not.found\",\n    \"message\": \"Cliente não encontrado\"\n}"
+				},
+				{
+					"id": "26039706-686afb9c-4176-402a-83b7-884ce17b31c0",
+					"name": "200 - Sucesso Copy",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-application-key",
+								"value": "{{app_key}}"
+							},
+							{
+								"key": "x-application-id",
+								"value": "{{app_id}}"
+							},
+							{
+								"key": "x-organization-slug",
+								"value": "{{org_slug}}"
+							},
+							{
+								"key": "x-channel-id",
+								"value": "{{channel_id}}"
+							},
+							{
+								"key": "x-app-version",
+								"value": "{{app_version}}",
+								"type": "text"
+							},
+							{
+								"key": "x-platform-version",
+								"value": "{{platform_version}}",
+								"type": "text"
+							},
+							{
+								"key": "x-platform",
+								"value": "{{platform}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_gw_claro}}/ext-application/v1/customer/:cpf",
+							"host": [
+								"{{url_gw_claro}}"
+							],
+							"path": [
+								"ext-application",
+								"v1",
+								"customer",
+								":cpf"
+							],
+							"variable": [
+								{
+									"key": "cpf",
+									"value": "{{cpf}}"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Fri, 27 Sep 2024 20:13:01 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json;charset=utf-8"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "x-application-context",
+							"value": "Claro Extensions:sit:8080"
+						},
+						{
+							"key": "localtrackingid",
+							"value": "074d2eade030455e89691515288b2e4f"
+						},
+						{
+							"key": "x-tracking-source",
+							"value": "971943f438f24b74871f322f39fac271"
+						},
+						{
+							"key": "x-envoy-upstream-service-time",
+							"value": "2157"
+						},
+						{
+							"key": "server",
+							"value": "istio-envoy"
+						},
+						{
+							"key": "x-envoy-decorator-operation",
+							"value": "claro-realwave-extensions-application.sit.svc.cluster.local:8080/*"
+						},
+						{
+							"key": "x-request-id",
+							"value": "b05898b86206afbf326a9f3058bd10b15183ad6e51502592bb365c7b9c702dff"
+						},
+						{
+							"key": "cache-control",
+							"value": "no-store, max-age=0"
+						},
+						{
+							"key": "strict-transport-security",
+							"value": "max-age=15768000"
+						},
+						{
+							"key": "x-frame-options",
+							"value": "DENY"
+						},
+						{
+							"key": "x-xss-protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "x-download-options",
+							"value": "noopen"
+						},
+						{
+							"key": "x-content-type-options",
+							"value": "nosniff"
+						},
+						{
+							"key": "vary",
+							"value": "accept-encoding"
+						},
+						{
+							"key": "content-encoding",
+							"value": "gzip"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "{\n    \"content\": {\n        \"customer\": {\n            \"id\": \"09ec91ac-8c44-4fab-9007-c86c1fd04bc7\",\n            \"documents\": [\n                {\n                    \"number\": \"70640355889\",\n                    \"type\": \"CPF\"\n                }\n            ],\n            \"contacts\": [\n                {\n                    \"contactType\": \"PHONE\",\n                    \"content\": {\n                        \"areaCode\": \"11\",\n                        \"lineNumber\": \"*****0095\",\n                        \"countryCode\": \"55\"\n                    }\n                },\n                {\n                    \"contactType\": \"EMAIL\",\n                    \"content\": {\n                        \"email\": \"70640******@gmail.com\"\n                    }\n                }\n            ],\n            \"sso\": false\n        },\n        \"user\": {\n            \"uid\": \"70640355889\",\n            \"email\": \"70640******@gmail.com\",\n            \"type\": \"CLARO\"\n        },\n        \"firstAccess\": true,\n        \"step\": \"CHECKOUT\",\n        \"status\": \"ACTIVE\",\n        \"phoneLinesLimitReached\": false\n    }\n}"
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "fe6fc87c-a636-4b3a-8808-5fcf5b307f93",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "976c2ff8-8d82-4026-9994-3d15152ccc01",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
